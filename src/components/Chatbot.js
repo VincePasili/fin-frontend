@@ -107,7 +107,7 @@ const Chatbot = () => {
                     AUTOGPT
                 </h1>
             </div>
-            <div className="flex flex-col bg-white md:p-4 rounded-lg shadow-lg w-full md:w-2/3 h-screen justify-between">
+            <div className="flex flex-col bg-white md:p-4 rounded-lg shadow-lg w-full md:w-1/2 h-screen justify-between">
 
                 <div className="overflow-y-scroll h-screen mb-4 px-3">
                     {messages.map((message, index) => (
@@ -122,7 +122,7 @@ const Chatbot = () => {
 
                     <div className="flex-grow flex items-center border bg-gray-300 rounded-full relative">
                         <label htmlFor="file-upload" className="text-slate-600 cursor-pointer">
-                            <IoMdCloudUpload size={30} />
+                            <IoMdCloudUpload size={40} />
                         </label>
                         <input
                             id="file-upload"
@@ -130,17 +130,16 @@ const Chatbot = () => {
                             className="hidden"
                             onChange={handleFileChange}
                         />
-                        <input
+                        <textarea
                             value={input}
                             onChange={e => setInput(e.target.value)}
                             type="text"
-                            aria-rowcount={2}
                             placeholder="Type your message here..."
-                            className="flex-grow text-center py-1 text-lg bg-slate-100 rounded-full outline-none"
+                            className="flex-grow text-start justify-start py-1 px-5 text-lg bg-slate-100 rounded-full outline-none"
                             disabled={isLoading}
                         />
                         <button type="submit" className="absolute right-2 text-[#6852F9]" disabled={isLoading}>
-                            <IoMdSend size={30} />
+                            <IoMdSend size={40} />
                         </button>
                     </div>
                 </form>
