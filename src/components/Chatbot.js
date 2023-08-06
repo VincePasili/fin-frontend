@@ -101,17 +101,18 @@ const Chatbot = () => {
     }
 
     return (
-        <div className='flex flex-col items-center bg-[#F4F4FF] pb-20 justify-center'>
-            <div className=' text-4xl md:text-6xl mb-10 font-extrabold text-slate-500'>
+        <div className='flex flex-col items-center bg-gradient-to-r from-blue-900 to-slate-800 m-20 justify-center'
+>
+            <div className=' text-4xl md:text-6xl mb-10 font-extrabold text-slate-100'>
                 <h1>
                     AUTOGPT
                 </h1>
             </div>
-            <div className="flex flex-col bg-white md:p-4 rounded-lg shadow-lg w-full md:w-1/2 h-screen justify-between">
+            <div className="flex flex-col bg-blue-100 md:p-4 rounded-lg shadow-lg w-full md:w-1/2 justify-between">
 
-                <div className="overflow-y-scroll h-screen mb-4 px-3">
+                <div className="mb-4 px-3">
                     {messages.map((message, index) => (
-                        <div key={index} className={`p-2 rounded-lg mb-5 ${message.role === 'assistant' ? 'flex shadow-purple-300 shadow items-start border-l-2 border-purple-700 bg-[#F5F6FA] text-slate-700 mr-auto w-full md:w-2/3' : ' flex shadow shadow-slate-300 text-white items-end justify-end border-r-2 border-cyan-700 bg-[#6852F9] ml-auto w-full md:w-2/3'}`}>
+                        <div key={index} className={`p-2 rounded-lg mb-5 ${message.role === 'assistant' ? 'flex shadow-blue-300 shadow items-start border-l-2 border-blue-700 bg-[#F5F6FA] text-slate-700 mr-auto w-full text-xl md:w-2/3' : ' flex shadow shadow-slate-300 text-slate-900 items-end justify-end border-r-2 border-slate-800 bg-blue-200 ml-auto text-xl w-full md:w-2/3'}`}>
                             <p>{message.content}</p>
                         </div>
                     ))}
@@ -120,22 +121,23 @@ const Chatbot = () => {
 
                 <form onSubmit={handleSend} className="flex items-center mb-2">
 
-                    <div className="flex-grow flex items-center border bg-gray-300 rounded-full relative">
-                        <label htmlFor="file-upload" className="text-slate-600 cursor-pointer">
+                    <div className="flex-grow flex items-center border bg-slate-300 rounded-full relative">
+                        <label htmlFor="file-upload" className="text-slate-600 m-2 cursor-pointer">
                             <IoMdCloudUpload size={40} />
                         </label>
                         <input
+                            accept='.pdf, .xlsx'
                             id="file-upload"
                             type="file"
                             className="hidden"
                             onChange={handleFileChange}
                         />
-                        <textarea
+                        <input
                             value={input}
                             onChange={e => setInput(e.target.value)}
                             type="text"
                             placeholder="Type your message here..."
-                            className="flex-grow text-start justify-start py-1 px-5 text-lg bg-slate-100 rounded-full outline-none"
+                            className="flex-grow text-start justify-start m-1 py-1 px-5 text-xl bg-slate-100 rounded-full outline-none"
                             disabled={isLoading}
                         />
                         <button type="submit" className="absolute right-2 text-[#6852F9]" disabled={isLoading}>
