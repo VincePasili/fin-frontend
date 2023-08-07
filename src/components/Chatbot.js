@@ -10,12 +10,27 @@ const Chatbot = () => {
     const [input, setInput] = useState("");
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [fontSize, setFontSize] = useState('text-xl'); // Default font size
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
+
     useEffect(scrollToBottom, [messages]);
+
+    const handleInputChange = (e) => {
+        setInput(e.target.value);
+
+        // Adjust font size based on input length
+        if (e.target.value.length < 10) {
+            setFontSize('text-xl');
+        } else if (e.target.value.length < 20) {
+            setFontSize('text-lg');
+        } else {
+            setFontSize('text-base');
+        }
+    };
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -76,7 +91,7 @@ const Chatbot = () => {
                         });
                     });
                 }
-            }else if (data && data.info) {
+            } else if (data && data.info) {
                 // file upload was successful, but there's no chatbot response to display
                 typingMessage.content = data.info;
                 setMessages(prevMessages => {
@@ -89,7 +104,7 @@ const Chatbot = () => {
                         }
                     });
                 });
-            }else {
+            } else {
                 console.error('Unexpected response from server', data);
             }
 
@@ -101,27 +116,27 @@ const Chatbot = () => {
     }
 
     return (
-        <div className='flex flex-col items-center bg-gradient-to-r from-blue-900 to-slate-800 m-20 justify-center'
->
+        <div className='flex w-full md:w-3/4 flex-col items-center m-20 justify-center'
+        >
             <div className=' text-4xl md:text-6xl mb-10 font-extrabold text-slate-100'>
                 <h1>
                     AUTOGPT
                 </h1>
             </div>
-            <div className="flex flex-col bg-blue-100 md:p-4 rounded-lg shadow-lg w-full md:w-1/2 justify-between">
+            <div className="flex flex-col bg-blue-100 md:p-4 rounded-lg shadow-lg w-full md:w-2/3">
 
                 <div className="mb-4 px-3">
                     {messages.map((message, index) => (
-                        <div key={index} className={`p-2 rounded-lg mb-5 ${message.role === 'assistant' ? 'flex shadow-blue-300 shadow items-start border-l-2 border-blue-700 bg-[#F5F6FA] text-slate-700 mr-auto w-full text-xl md:w-2/3' : ' flex shadow shadow-slate-300 text-slate-900 items-end justify-end border-r-2 border-slate-800 bg-blue-200 ml-auto text-xl w-full md:w-2/3'}`}>
-                            <p>{message.content}</p>
+                        <div key={index} className={`p-2 rounded-lg mb-5 ${message.role === 'assistant' ? 'flex shadow-blue-300 shadow items-start border-l-2 border-blue-700 bg-[#F5F6FA] text-slate-700 mr-auto w-full text-xl' : ' break-words flex shadow shadow-slate-300 text-slate-900 items-end justify-end border-r-2 border-slate-800 bg-blue-200 ml-auto text-xl w-full md:w-2/3'}`}>
+                            <p className='break-words break-all'>{message.content}</p>
                         </div>
                     ))}
                     <div ref={messagesEndRef} />
                 </div>
 
-                <form onSubmit={handleSend} className="flex items-center mb-2">
+                <form onSubmit={handleSend} className="flex w-full items-center mb-2">
 
-                    <div className="flex-grow flex items-center border bg-slate-300 rounded-full relative">
+                    <div className="flex items-center w-full md:flex-row flex-col border bg-slate-300 md:rounded-full relative">
                         <label htmlFor="file-upload" className="text-slate-600 m-2 cursor-pointer">
                             <IoMdCloudUpload size={40} />
                         </label>
@@ -134,13 +149,21 @@ const Chatbot = () => {
                         />
                         <input
                             value={input}
+                            onChange={handleInputChange}
+                            type="text"
+                            placeholder="Type your message here..."
+                            className={`flex-grow text-start justify-start m-1 py-1 px-5 ${fontSize} bg-slate-100 rounded-full outline-none`}
+                            disabled={isLoading}
+                        />
+                        {/* <input
+                            value={input}
                             onChange={e => setInput(e.target.value)}
                             type="text"
                             placeholder="Type your message here..."
                             className="flex-grow text-start justify-start m-1 py-1 px-5 text-xl bg-slate-100 rounded-full outline-none"
                             disabled={isLoading}
-                        />
-                        <button type="submit" className="absolute right-2 text-[#6852F9]" disabled={isLoading}>
+                        /> */}
+                        <button type="submit" className="hidden md:absolute md:hidden right-2 text-[#6852F9]" disabled={isLoading}>
                             <IoMdSend size={40} />
                         </button>
                     </div>
