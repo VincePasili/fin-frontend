@@ -123,7 +123,7 @@ const Chatbot = () => {
                     AUTOGPT
                 </h1>
             </div>
-            <div className="flex flex-col bg-blue-100 md:p-4 rounded-lg shadow-lg w-full md:w-2/3">
+            <div className="flex flex-col bg-blue-100 md:p-4 rounded-lg shadow-lg w-full">
 
                 <div className="mb-4 px-3">
                     {messages.map((message, index) => (
